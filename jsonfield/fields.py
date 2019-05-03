@@ -188,17 +188,6 @@ class TypedJSONField(JSONField):
 
 
 def configure_database_connection(connection, **kwargs):
-    if connection.vendor != 'postgresql':
-        return
-
-    # Ensure that psycopg does not do JSON decoding under the hood
-    # We want to be able to do our own decoding with our own options
-    import psycopg2.extras
-    if hasattr(psycopg2.extras, 'register_default_jsonb'):
-        psycopg2.extras.register_default_jsonb(
-            connection.connection,
-            globally=False,
-            loads=lambda x: x)
-
+    return
 
 connection_created.connect(configure_database_connection)
